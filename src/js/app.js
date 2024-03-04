@@ -9,47 +9,36 @@ class Character {
   }
 }
 
-class Team extends Object {
-    constructor(object) {
-      super();
-      this.members = new Set();
-      Object.assign(this, object);
-    }
+export default class Team {
   
-    [Symbol.iterator]() {
-        // changed `entries` to `values`
-        const values = Object.values(this);
-        let index = -1;
+  constructor() {
+    this.members = new Set();
+  }
 
-        return {
-            next() {
-                index++;
+  getPerson() {
+    return this.members
+  }
 
-                return {
-                    // changed `entries` to `values`
-                    value: values[index],
-                    // changed `entries` to `values`
-                    done: index >= values.length
-                }
-            }
-        }
-     }
+  *[Symbol.iterator]() {
+    yield this.getPerson();
+  }
 
-    add(person) {
-      const isPersonInTeam = () => this.members.has(person);
-      if (!isPersonInTeam()) {
-        this.members.add(person);
-      } else {
-        throw new Error("Person is already in the team");
-      }
+  add(person) {
+    const isPersonInTeam = () => this.members.has(person);
+    if (!isPersonInTeam()) {
+      this.members.add(person);
+    } else {
+      throw new Error("Person is already in the team");
     }
+  }
 
-    addAll(...persons) {
-      for (const person of persons) {
-        this.members.add(person);
-      }
-    } 
+  addAll(...persons) {
+    for (const person of persons) {
+      this.members.add(person);
+    }
+  }
 }
+
 
 /*
 const charac1 = new Character("Bowman1", "Bowman", 50, 1, 25, 25);
